@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en-ZA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CommunityCare — Booking Wireframe</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <header class="wireframe-header">
+    <a href="index.html">CommunityCare</a>
+    <nav aria-label="Primary navigation">
+      <ul><li><a href="index.html">Home</a></li><li><a href="resources.html">Find a service</a></li><li><a href="booking.html">Book an appointment</a></li></ul>
+    </nav>
+  </header>
+  <main class="wireframe-main">
+    <section class="wireframe-section" aria-labelledby="service-heading">
+      <h1 id="service-heading">General consultation</h1>
+      <p>Routine health consultation and assessment.</p>
+      <h2>Practitioner availability</h2>
+      <ul><li>Dr. L. Maseko — Monday and Wednesday</li><li>Nurse A. Dlamini — Tuesday and Thursday</li></ul>
+    </section>
+    <section class="wireframe-form" aria-labelledby="booking-heading">
+      <h2 id="booking-heading">Request an appointment</h2>
+      <p id="form-help">Fields marked required must be completed.</p>
+      <form>
+        <label for="full-name">Full name (required)</label>
+        <input id="full-name" name="full-name" aria-describedby="form-help">
+        <label for="email">Email address (required)</label>
+        <input id="email" name="email" type="email" aria-describedby="form-help">
+        <label for="date">Preferred date (required)</label>
+        <input id="date" name="date" type="date" aria-describedby="form-help">
+        <label for="time">Preferred time (required)</label>
+        <select id="time" name="time" aria-describedby="form-help"><option>Select a time</option><option>09:00</option><option>11:00</option><option>14:00</option></select>
+        <label for="notes">Additional information</label>
+        <textarea id="notes" name="notes" rows="4"></textarea>
+        <button type="submit">Request appointment</button>
+      </form>
+    </section>
+  </main>
+  <footer class="wireframe-footer"><p>CommunityCare prototype — accessible healthcare booking hub.</p></footer>
+</body>
+</html>

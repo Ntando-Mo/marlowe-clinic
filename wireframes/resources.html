@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en-ZA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CommunityCare — Service Listing Wireframe</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <header class="wireframe-header">
+    <a href="index.html">CommunityCare</a>
+    <nav aria-label="Primary navigation">
+      <ul><li><a href="index.html">Home</a></li><li><a href="resources.html">Find a service</a></li><li><a href="booking.html">Book an appointment</a></li></ul>
+    </nav>
+  </header>
+  <main class="wireframe-main">
+    <h1>Find a healthcare service</h1>
+    <div class="wireframe-grid">
+      <section aria-labelledby="results-heading">
+        <h2 id="results-heading">Service results</h2>
+        <form>
+          <label for="listing-search">Search services</label>
+          <input id="listing-search" type="search">
+          <button type="submit">Search</button>
+        </form>
+        <article class="wireframe-card"><h3>General consultation</h3><p>Routine health consultations and assessment.</p><p><strong>Availability:</strong> Several practitioners available.</p><a href="booking.html">View details and book</a></article>
+        <article class="wireframe-card"><h3>Child health</h3><p>Child wellness checks and general support.</p><p><strong>Availability:</strong> Check practitioner schedule.</p><a href="booking.html">View details and book</a></article>
+      </section>
+      <aside class="wireframe-aside" aria-labelledby="filter-heading">
+        <h2 id="filter-heading">Triage and category filters</h2>
+        <fieldset>
+          <legend>Priority</legend>
+          <label><input type="radio" name="priority"> Routine</label>
+          <label><input type="radio" name="priority"> Soon</label>
+        </fieldset>
+        <fieldset>
+          <legend>Category</legend>
+          <label><input type="checkbox"> General care</label>
+          <label><input type="checkbox"> Child health</label>
+          <label><input type="checkbox"> Preventative care</label>
+        </fieldset>
+      </aside>
+    </div>
+  </main>
+  <footer class="wireframe-footer"><p>CommunityCare prototype — accessible healthcare booking hub.</p></footer>
+</body>
+</html>

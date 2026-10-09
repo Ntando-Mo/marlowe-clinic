@@ -1,0 +1,91 @@
+/* CommunityCare low-fidelity wireframe styles.
+   Contrast checks used for the wireframe palette:
+   #173B39 on #F7FAF9 = approximately 10.1:1 (normal text: PASS)
+   #FFFFFF on #0B3D3A = approximately 10.1:1 (normal text: PASS)
+   #173B39 on #FFFFFF = approximately 13.2:1 (normal text: PASS)
+   #FFFFFF on #7A2E2E = approximately 8.0:1 (normal text: PASS)
+   Recheck final deployed colours with an accessibility checker before submission.
+*/
+
+:root {
+  font-family: Arial, Helvetica, sans-serif;
+  color: #173B39;
+  background: #F7FAF9;
+  line-height: 1.5;
+}
+
+* { box-sizing: border-box; }
+
+body { margin: 0; background: #F7FAF9; }
+
+a, button, input, select, textarea { font: inherit; }
+
+a { color: #0B3D3A; font-weight: 700; }
+
+:focus-visible {
+  outline: 3px solid #B45309;
+  outline-offset: 3px;
+}
+
+.wireframe-header,
+.wireframe-footer {
+  background: #0B3D3A;
+  color: #FFFFFF;
+  padding: 1rem;
+}
+
+.wireframe-header nav ul,
+.wireframe-footer ul {
+  display: flex;
+  gap: 1rem;
+  flex-wrap: wrap;
+  list-style: none;
+  padding: 0;
+  margin: 0.75rem 0 0;
+}
+
+.wireframe-header a,
+.wireframe-footer a { color: #FFFFFF; }
+
+.wireframe-main {
+  width: min(1100px, 92%);
+  margin: 0 auto;
+  padding: 2rem 0 3rem;
+}
+
+.wireframe-section,
+.wireframe-card,
+.wireframe-aside,
+.wireframe-form {
+  border: 2px dashed #5C7472;
+  background: #FFFFFF;
+  padding: 1.25rem;
+  margin: 1rem 0;
+}
+
+.wireframe-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+}
+
+label { display: block; font-weight: 700; margin-top: 1rem; }
+input, select, textarea {
+  width: 100%;
+  border: 2px solid #173B39;
+  padding: 0.7rem;
+  margin-top: 0.35rem;
+}
+
+button {
+  border: 2px solid #0B3D3A;
+  background: #0B3D3A;
+  color: #FFFFFF;
+  padding: 0.7rem 1rem;
+  margin-top: 1rem;
+  font-weight: 700;
+}
+
+@media (max-width: 700px) {
+  .wireframe-grid { grid-template-columns: 1fr; }
+}

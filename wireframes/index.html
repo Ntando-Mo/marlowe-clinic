@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="en-ZA">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CommunityCare — Landing Wireframe</title>
+  <link rel="stylesheet" href="main.css">
+</head>
+<body>
+  <header class="wireframe-header">
+    <a href="index.html">CommunityCare</a>
+    <nav aria-label="Primary navigation">
+      <ul>
+        <li><a href="index.html">Home</a></li>
+        <li><a href="resources.html">Find a service</a></li>
+        <li><a href="booking.html">Book an appointment</a></li>
+      </ul>
+    </nav>
+  </header>
+  <main class="wireframe-main">
+    <section class="wireframe-section" aria-labelledby="welcome-heading">
+      <h1 id="welcome-heading">Accessible community healthcare</h1>
+      <p>Find clinic services, check practitioner availability and request an appointment.</p>
+      <form action="resources.html" method="get">
+        <label for="service-search">Search for a healthcare service</label>
+        <input id="service-search" name="q" type="search" placeholder="For example, dental care">
+        <button type="submit">Search services</button>
+      </form>
+    </section>
+    <section class="wireframe-section" aria-labelledby="quick-heading">
+      <h2 id="quick-heading">Quick access</h2>
+      <article class="wireframe-card"><h3>Find a service</h3><p>Browse clinical services and filter results.</p><a href="resources.html">View services</a></article>
+      <article class="wireframe-card"><h3>Book an appointment</h3><p>Choose a service and submit an appointment request.</p><a href="booking.html">Start booking</a></article>
+    </section>
+  </main>
+  <footer class="wireframe-footer">
+    <p>CommunityCare prototype — accessible healthcare booking hub.</p>
+  </footer>
+</body>
+</html>
