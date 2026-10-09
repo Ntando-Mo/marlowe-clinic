@@ -1,45 +1,30 @@
-import { useState } from 'react';
-import BookingForm from './components/BookingForm';
-import ServiceListing from './components/ServiceListing';
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Header from './components/Header'
+import Footer from './components/Footer'
+import HomePage from './pages/HomePage'
+import ServicesPage from './pages/ServicesPage'
+import BookingPage from './pages/BookingPage'
+
+function NotFound() {
+  return (
+    <main id="main-content" className="section container">
+      <h1>Page not found</h1>
+      <p>The page you requested could not be found.</p>
+    </main>
+  )
+}
 
 export default function App() {
-  const [currentPage, setCurrentPage] = useState('directory');
-
   return (
-    <>
-      <header className="wireframe-header">
-        <a href="#home" onClick={(e) => { e.preventDefault(); setCurrentPage('directory'); }}>
-          CommunityCare
-        </a>
-        <nav aria-label="Primary navigation">
-          <ul>
-            <li>
-              <a 
-                href="#directory" 
-                onClick={(e) => { e.preventDefault(); setCurrentPage('directory'); }}
-                aria-current={currentPage === 'directory' ? 'page' : undefined}
-              >
-                Find a service
-              </a>
-            </li>
-            <li>
-              <a 
-                href="#booking" 
-                onClick={(e) => { e.preventDefault(); setCurrentPage('booking'); }}
-                aria-current={currentPage === 'booking' ? 'page' : undefined}
-              >
-                Book an appointment
-              </a>
-            </li>
-          </ul>
-        </nav>
-      </header>
-
-      {currentPage === 'directory' ? <ServiceListing /> : <BookingForm />}
-
-      <footer className="wireframe-footer">
-        <p>CommunityCare prototype — accessible healthcare booking hub.</p>
-      </footer>
-    </>
-  );
+    <BrowserRouter>
+      <Header />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/services" element={<ServicesPage />} />
+        <Route path="/booking" element={<BookingPage />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Footer />
+    </BrowserRouter>
+  )
 }
