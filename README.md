@@ -1,33 +1,70 @@
-# Marlowe Clinic: Accessible Community Healthcare Portal
+# Marlowe Clinic: Accessible Healthcare Portal
+**Inclusive UI/UX and Accessible React Component Architecture**
 
-## Project Overview
-Marlowe Clinic is a fully accessible Single Page Application (SPA) providing community healthcare access. Developed as Capstone 4, this portal allows users to browse medical services, filter by triage priority, and request appointments. The application is engineered to meet WCAG 2.1 AA compliance, ensuring seamless operability for users relying on assistive technologies, specifically tailored for keyboard-only navigation and NVDA screen reader compatibility.
+Live Prototype: [https://your-username.github.io/marlowe-clinic/](https://your-username.github.io/marlowe-clinic/)
 
-## 1. Accessibility Trade-Off Analysis
-**Client-Side Routing vs. Traditional Navigation:** 
-Traditional multi-page applications trigger a full browser refresh, naturally resetting screen reader focus to the top of the new document. In our SPA, navigating between the Service Directory and the Booking Form dynamically updates the DOM without a hard refresh. The trade-off was accepting increased architectural complexity to engineer a custom `useFocusOnViewChange` hook. This overhead was necessary to ensure our primary persona (an NVDA screen reader user) is immediately informed of page changes without their focus being abandoned on a stale DOM node.
+A production-grade, client-side React application designed to provide equitable healthcare access to the Careville community. The platform balances a premium, editorial design system with strict WCAG 2.1 AA compliance, ensuring a seamless booking experience for all users, specifically accommodating keyboard-only navigation and screen-reader (NVDA) reliance.
 
-**Custom Stateful Toggle Controls vs. Native Form Elements:** 
-For the triage filtering system, we evaluated using native `<select>` dropdowns versus custom stateful buttons. Native elements provide built-in screen reader support with zero JavaScript configuration but are rigid to style and have small hit areas. We opted to build custom toggle controls. This trade-off sacrificed the out-of-the-box reliability of native inputs in favor of a highly tailored, high-contrast interface that accommodates low-vision requirements while remaining fully operable via keyboard.
+## Quick Start
+```bash
+npm install
+npm run dev        # Local development at http://localhost:5173
+npm test           # Executes unit, interaction, and axe-core accessibility suites
+npm run build      # Generates optimized production build in /dist
+```
 
-**Deferred "Polite" Form Validation vs. Real-Time Inline Feedback:** 
-We evaluated implementing real-time validation versus deferred validation triggered upon form submission. Real-time validation offers sighted users immediate visual correction, but can overwhelm screen reader users with chaotic auditory feedback mid-typing. We chose deferred validation. This intentional friction ensures the live region only speaks when the user explicitly expects feedback, making the form significantly more navigable.
+## Repository Architecture
+```text
+wireframes/     # Initial accessibility planning (index.html, wcag-matrix.md, persona.md)
+src/            # React application source code
+  components/   # Modular UI components (Header, LogoMark, Footer)
+  pages/        # Route views (HomePage, Services, Booking)
+  styles/       # global.css (Clinical design system and structural overrides)
+public/         # Static assets (favicon.svg)
+lighthouse/     # Production accessibility audit reports
+```
 
-## 2. Assistive Tech State Architecture
-Our React state management directly drives the DOM accessibility tree to ensure assistive technologies remain synchronized with the UI. 
-* **Filter State:** React `useState` hooks control the triage categories. These state values are directly interpolated into the `aria-expanded` attributes on the accordion toggle and `aria-pressed` attributes on the filter chips, announcing real-time boolean changes to screen readers.
-* **Form Validation:** We utilize controlled components where the validation state dynamically updates the `aria-invalid` attribute on inputs. Errors are rendered inside a dedicated `<LiveRegion>` component containing `aria-live="polite"`, prompting NVDA to read the error state immediately without interrupting the user's keystrokes.
-* **Programmatic Focus:** Using the `useRef` hook, we capture references to the main `<h1>` heading and the first invalid form input. Upon route transitions or failed form submissions, React's `useEffect` explicitly calls `.focus()` on these refs to safely guide the user's focus.
+---
 
-## 3. Verification & Testing Audit
+## Part A: Accessibility Trade-off Analysis
 
-### Automated Testing
-* **Tool Used:** Chrome Lighthouse (DevTools)
-* **Pages Tested:** `/` (Service Directory) and `/booking` (Appointment Form)
-* **Score Achieved:** 100% Accessibility
-* **Notes:** All contrast ratios exceed WCAG AA 4.5:1 requirements. Dynamic `aria-label` attributes successfully implemented to provide unique programmatic names for identical "Book Now" links.
+To accommodate keyboard-only navigation and NVDA reliance, specific engineering decisions were made to prioritize functional accessibility over generic aesthetic uniformity:
 
-### Manual Screen Reader & Keyboard Audit
-* **Testing Environment:** Windows 11, Google Chrome, NVDA 2024.1
-* **Keyboard Results:** Zero keyboard traps detected. DOM tab sequence strictly matches the visual layout. The custom `:focus-visible` outline provides high-visibility tracking.
-* **NVDA Results:** NVDA successfully parsed all semantic landmarks (`<header>`, `<main>`, `<aside>`, `<footer>`). Filter buttons correctly announced their `aria-pressed` state changes in real-time. Triggering a form validation error successfully fired the `aria-live` region, announcing the error immediately to the user.
+1. **Native Controls vs. Custom Widgets:** Custom date-pickers and stylized dropdowns often break NVDA interaction flows and trap keyboard users. We explicitly utilized native `<input type="date">` and `<select>` elements for the booking form. While this sacrifices cross-browser visual uniformity, it guarantees bulletproof keyboard behavior and native mobile picker support.
+2. **Highly Visible Focus Management vs. Minimalist Aesthetics:** Premium minimalist designs often hide focus states. Marlowe Clinic embraces focus as a core navigational tool. All interactive elements utilize a highly visible `3px solid var(--forest)` outline with a `3px outline-offset`, ensuring keyboard users never lose their place on the screen.
+3. **Live Region Verbosity vs. Silence:** Announcing every keystroke or filter toggle immediately would flood screen readers with noise. Filter and search result counts are debounced, and form field errors are announced *on blur* rather than on change. This requires a slight delay in feedback but provides a vastly superior, polite listening experience.
+
+## Part B: Assistive Technology State Architecture
+
+React state acts as the single source of truth. The accessibility tree is entirely state-derived, ensuring the DOM never drifts from the visual UI:
+
+* **Dynamic ARIA Attributes:** Form inputs dynamically derive `aria-invalid` from validation state. Error messages are programmatically linked to inputs using `aria-describedby`, ensuring screen readers announce the specific error upon input focus. 
+* **State-Driven Signifiers:** Active states on category filters rely on `aria-pressed="true"`, which triggers a structural CSS inversion (solid background, contrasting text) rather than relying on color shifts alone (WCAG 1.4.1).
+* **Focus Flow on Routing (SPAs):** React Router does not natively announce page changes. We implemented manual focus management and a `scrollToTop` handler on all navigation links. This resets the viewport and allows the screen reader to naturally catch the new `<h1>` title.
+* **Bypass Blocks:** A dedicated `.skip-link` is mounted at the top of the DOM. It remains visually hidden but drops into view upon the first `Tab` keystroke, allowing keyboard users to bypass the sticky navigation.
+
+## Part C: Verification and Testing Audit
+
+### 1. Automated Audits (Reproducible)
+* **Vitest / RTL:** All component renders and user event interactions pass.
+* **axe-core (jest-axe):** 0 violations found across all wireframes and all React views.
+* **Contrast Ratios:** Validated manually and via automated tools. The primary brand color `var(--forest)` on `var(--white)` yields a 10.8:1 ratio, safely exceeding the WCAG AA 4.5:1 requirement.
+
+### 2. Lighthouse Production Audits
+*Tested on production build (`npm run build && npm run preview`) via Headless Chromium.*
+
+| Route | Accessibility Score | Audit Artifact |
+| :--- | :--- | :--- |
+| `/` (Home) | 100 / 100 | `lighthouse/home.json` |
+| `/services` | 100 / 100 | `lighthouse/services.json` |
+| `/booking` | 100 / 100 | `lighthouse/booking.json` |
+
+### 3. Manual NVDA & Keyboard Protocol
+Manual testing was conducted keyboard-only with NVDA to simulate screen-reader workflows:
+* **Landmark Navigation:** Pressing `D` cycles logically through `banner`, `main`, and `contentinfo` (footer).
+* **Bypass Blocks:** Initial `Tab` focuses "Skip to main content". `Enter` successfully routes focus to the `<main>` tag.
+* **Form Validation:** Submitting an empty form successfully intercepts the submission, moves focus to the first invalid input, and explicitly reads the error message.
+* **Tab Sequence:** No keyboard traps exist. Focus sequence follows a strict, logical left-to-right, top-to-bottom visual hierarchy across all views.
+
+---
+
