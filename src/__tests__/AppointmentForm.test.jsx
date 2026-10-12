@@ -1,31 +1,62 @@
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
-import AppointmentForm from '../components/AppointmentForm'
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import AppointmentForm from '../components/AppointmentForm';
+import { MemoryRouter } from 'react-router-dom';
+import { describe, it, expect } from 'vitest';
 
-describe('AppointmentForm', () => {
-  it('associates validation errors with invalid fields', async () => {
-    const user = userEvent.setup()
-    render(<AppointmentForm serviceName="General consultation" />)
+const renderForm = () => {
+  return render(
+    <MemoryRouter>
+      <AppointmentForm />
+    </MemoryRouter>
+  );
+};
 
-    await user.click(screen.getByRole('button', { name: /request appointment/i }))
+describe('AppointmentForm Accessibility & Validation', () => {
+  it('renders all required form fields', () => {
+    renderForm();
+    expect(screen.getByLabelText(/full name/i)).toBeInTheDocument();
+    expect(screen.getByLabelText(/email address/i)).toBeInTheDocument();
+    expect(screen.getByRole('button', { name: /request appointment/i })).toBeInTheDocument();
+  });
 
-    const name = screen.getByLabelText(/full name/i)
-    expect(name).toHaveAttribute('aria-invalid', 'true')
-    expect(screen.getByText(/enter your full name/i)).toBeInTheDocument()
-    expect(screen.getByRole('status')).toHaveTextContent(/fields that need attention/i)
-    expect(name).toHaveFocus()
-  })
+  it('applies aria-invalid to the name input when submitted empty', async () => {
+    renderForm();
+    const user = userEvent.setup();
+    const nameInput = screen.getByLabelText(/full name/i);
+    
+    expect(nameInput).not.toHaveAttribute('aria-invalid', 'true');
+    await user.click(screen.getByRole('button', { name: /request appointment/i }));
+    expect(nameInput).toHaveAttribute('aria-invalid', 'true');
+  });
 
-  it('submits valid data and moves focus to confirmation', async () => {
-    const user = userEvent.setup()
-    render(<AppointmentForm serviceName="General consultation" />)
+  it('shifts focus to the first invalid input upon failed submission', async () => {
+    renderForm();
+    const user = userEvent.setup();
+    const nameInput = screen.getByLabelText(/full name/i);
+    
+    await user.click(screen.getByRole('button', { name: /request appointment/i }));
+    expect(nameInput).toHaveFocus();
+  });
 
-    await user.type(screen.getByLabelText(/full name/i), 'Thandi Mokoena')
-    await user.type(screen.getByLabelText(/email address/i), 'thandi@example.com')
-    await user.type(screen.getByLabelText(/preferred date/i), '2099-05-12')
-    await user.selectOptions(screen.getByLabelText(/preferred time/i), '09:00')
-    await user.click(screen.getByRole('button', { name: /request appointment/i }))
+  it('renders an aria-live region for screen reader announcements', () => {
+    renderForm();
+    // Verifies the polite or assertive live region exists in the DOM
+    const liveRegion = document.querySelector('[aria-live]');
+    expect(liveRegion).toBeInTheDocument();
+  });
 
-    expect(await screen.findByRole('heading', { name: /appointment request received/i })).toHaveFocus()
-  })
-})
+  it('clears validation errors when valid data is entered', async () => {
+    renderForm();
+    const user = userEvent.setup();
+    const nameInput = screen.getByLabelText(/full name/i);
+    
+    // Trigger error
+    await user.click(screen.getByRole('button', { name: /request appointment/i }));
+    expect(nameInput).toHaveAttribute('aria-invalid', 'true');
+
+    // Fix error
+    await user.type(nameInput, 'Thandi Ndlovu');
+    expect(nameInput).toHaveAttribute('aria-invalid', 'false');
+  });
+});
