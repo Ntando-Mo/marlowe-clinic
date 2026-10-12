@@ -1,62 +1,32 @@
-import { Link } from 'react-router-dom'
-import { services } from '../data/services'
+import { Link } from 'react-router-dom';
 
 export default function HomePage() {
   return (
-    <>
+    <main id="main-content" tabIndex="-1">
       <section className="hero">
         <div className="container hero-grid">
-          <div>
-            <p className="eyebrow">Community healthcare access</p>
-            <h1>Healthcare information designed to be easier to navigate.</h1>
-            <p className="hero-copy">Find a clinic service, understand practitioner availability and request an appointment with a keyboard-friendly, screen-reader-aware experience.</p>
+          <div className="hero-content">
+            <p className="eyebrow">Community Healthcare Access</p>
+            <h1>Accessible care for everyone.</h1>
+            <p className="hero-copy">
+              Find a clinic service, understand practitioner availability, and request an appointment with a keyboard-friendly, screen-reader-aware portal.
+            </p>
             <div className="hero-actions">
-              <Link className="button" to="/services">Find a service</Link>
-              <Link className="button button-secondary-light" to="/booking">Book an appointment</Link>
+              <Link to="/booking" className="button">Book an appointment</Link>
+              <Link to="/services" className="button button-secondary-light">Browse services</Link>
             </div>
           </div>
-          <aside className="hero-card" aria-label="Accessibility features">
-            <p className="eyebrow">Built for access</p>
-            <h2>Designed around real interaction needs</h2>
-            <ul>
-              <li>Keyboard-first navigation</li>
-              <li>Visible focus states</li>
-              <li>Clear form errors and status messages</li>
-              <li>Meaningful headings and landmarks</li>
-            </ul>
-          </aside>
+          <div className="hero-image-wrapper">
+            <img 
+              src="https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?auto=format&fit=crop&q=80&w=800" 
+              alt="A welcoming, brightly lit community health clinic reception area with modern seating" 
+              className="hero-image"
+            />
+          </div>
         </div>
       </section>
-      <main id="main-content" tabIndex="-1">
-        <section className="section container" aria-labelledby="services-heading">
-          <div className="section-heading">
-            <div>
-              <p className="eyebrow">Start here</p>
-              <h2 id="services-heading">Popular clinic services</h2>
-            </div>
-            <Link to="/services">View all services</Link>
-          </div>
-          <div className="card-grid">
-            {services.slice(0, 3).map((service) => (
-              <article className="summary-card" key={service.id}>
-                <span className="tag">{service.category}</span>
-                <h3>{service.name}</h3>
-                <p>{service.description}</p>
-                <Link to={`/booking?service=${service.id}`}>Book this service</Link>
-              </article>
-            ))}
-          </div>
-        </section>
-        <section className="section section-muted" aria-labelledby="notice-heading">
-          <div className="container notice-grid">
-            <div>
-              <p className="eyebrow">Important</p>
-              <h2 id="notice-heading">This is a prototype, not an emergency service.</h2>
-            </div>
-            <p>If you need emergency medical assistance, use your local emergency service rather than this demonstration booking portal.</p>
-          </div>
-        </section>
-      </main>
-    </>
-  )
+      
+      {/* Keep your existing card-grid section below this */}
+    </main>
+  );
 }
