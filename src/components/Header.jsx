@@ -1,19 +1,18 @@
 import { Link, NavLink } from 'react-router-dom';
+import LogoMark from './LogoMark';
 
 export default function Header() {
-  // Reusable scroll function for all links
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
     <header className="site-header">
       <div className="header-inner">
-        <Link 
-          to="/" 
-          className="brand" 
-          onClick={scrollToTop}
-        >
-          <div className="brand-mark" aria-hidden="true">+</div>
-          CommunityCare
+        <Link to="/" className="brand" onClick={scrollToTop}>
+          <LogoMark className="brand-svg" />
+          <div className="brand-text">
+            <span className="brand-title">Marlowe Clinic</span>
+            <span className="brand-tagline">Community Healthcare</span>
+          </div>
         </Link>
         
         <nav aria-label="Main Navigation">
