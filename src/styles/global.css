@@ -448,29 +448,212 @@ input[aria-invalid="true"], select[aria-invalid="true"] {
 
 /* --- FOOTER --- */
 .site-footer { 
-  background: var(--white); 
-  border-top: 1px solid var(--border);
-  padding: 3rem 0; 
-  margin-top: 4rem;
+  background: var(--forest); 
+  color: var(--white); 
+  padding: 5rem 0 2rem; 
+  margin-top: 5rem;
 }
 
-.footer-inner { 
-  display: flex; 
-  justify-content: space-between; 
-  align-items: flex-start;
-  gap: 2rem; 
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1.5fr;
+  gap: 3rem;
+  margin-bottom: 4rem;
 }
 
-.footer-inner p { 
-  margin: 0; 
-  color: var(--charcoal); 
-  font-size: 0.9rem;
+.footer-brand {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-bottom: 1.5rem;
+  text-decoration: none;
 }
 
-.footer-title { 
-  font-size: 1rem; 
-  font-weight: 700; 
-  margin-bottom: 0.5rem; 
+.footer-brand:hover {
+  text-decoration: none;
+}
+
+.footer-brand-svg {
+  width: 2.75rem;
+  height: 2.75rem;
+  flex-shrink: 0;
+  /* This targets the inline SVG and dynamically forces the dark green paths to render as white against the dark footer */
+  --forest: var(--white); 
+}
+
+.footer-brand-text {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.footer-brand-title {
+  color: var(--white);
+  font-weight: 800;
+  font-size: 1.3rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.footer-brand-tagline {
+  color: var(--sage);
+  font-weight: 700;
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  line-height: 1.1;
+  margin-top: 0.15rem;
+}
+.footer-address, .footer-emergency {
+  color: var(--sage);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin: 0 0 1rem;
+}
+
+.footer-title {
+  color: var(--white);
+  font-size: 1rem;
+  font-weight: 700;
+  margin: 0 0 1.25rem;
+  letter-spacing: 0.02em;
+}
+
+.footer-links, .footer-hours {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.footer-links a {
+  color: var(--sage);
+  font-weight: 500;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.footer-links a:hover {
+  color: var(--white);
+}
+
+.footer-hours li {
+  display: flex;
+  justify-content: space-between;
+  color: var(--sage);
+  font-size: 0.95rem;
+  border-bottom: 1px solid rgba(221, 236, 231, 0.15);
+  padding-bottom: 0.5rem;
+}
+
+.footer-hours li:last-child {
+  border-bottom: none;
+}
+
+.footer-bottom {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-top: 2rem;
+  border-top: 1px solid rgba(221, 236, 231, 0.15);
+  flex-wrap: wrap;
+  gap: 1.5rem;
+}
+
+.copyright {
+  color: var(--sage);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.legal-links {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.legal-links a {
+  color: var(--sage);
+  font-size: 0.85rem;
+  font-weight: 500;
+  text-decoration: none;
+  transition: var(--transition);
+}
+
+.legal-links a:hover {
+  color: var(--white);
+}
+
+/* --- MEDIA QUERIES (Update existing block) --- */
+@media (max-width: 900px) {
+  .hero-grid, .booking-grid { 
+    grid-template-columns: 1fr; 
+    gap: 2.5rem; 
+  }
+  .footer-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 2.5rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .header-inner { 
+    flex-direction: column; 
+    padding: 1rem; 
+    gap: 1rem; 
+  }
+  .nav-list { 
+    width: 100%; 
+    justify-content: space-between; 
+  }
+  .section {
+    padding-top: 3rem;
+    padding-bottom: 3rem;
+  }
+  
+  /* Timeline responsive */
+  .timeline-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+  .timeline-grid::before {
+    top: 15px;
+    bottom: 15px;
+    left: 15px;
+    width: 2px;
+    height: auto;
+  }
+  .timeline-step {
+    padding-left: 4rem;
+  }
+  .step-node {
+    position: absolute;
+    left: 0;
+    top: 0;
+    margin-bottom: 0;
+  }
+}
+
+@media (max-width: 600px) {
+  .footer-grid {
+    grid-template-columns: 1fr;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+}
+
+@media (max-width: 480px) {
+  .hero-actions { 
+    flex-direction: column; 
+    align-items: stretch; 
+  }
+  .button, .button-outline, .appointment-form .button { 
+    width: 100%; 
+  }
 }
 
 /* --- MEDIA QUERIES --- */
