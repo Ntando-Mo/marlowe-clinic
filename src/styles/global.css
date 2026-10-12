@@ -790,3 +790,21 @@ input[aria-invalid="true"], select[aria-invalid="true"] {
     margin-bottom: 0;
   }
 }
+
+.mesh-gradient-bg {
+  /* Fallback base color */
+  background-color: var(--sage, #DDECE7);
+  
+  /* Layered radial gradients to create the mesh effect */
+  background-image: 
+    radial-gradient(at 0% 0%, rgba(255, 255, 255, 0.6) 0px, transparent 50%),
+    radial-gradient(at 100% 0%, rgba(20, 83, 75, 0.06) 0px, transparent 50%),
+    radial-gradient(at 100% 100%, rgba(255, 255, 255, 0.4) 0px, transparent 50%),
+    radial-gradient(at 0% 100%, rgba(20, 83, 75, 0.04) 0px, transparent 50%);
+    
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  
+  /* Optional: Smooth transition if the container resizes */
+  transition: background 0.3s ease-in-out;
+}

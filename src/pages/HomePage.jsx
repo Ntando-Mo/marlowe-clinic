@@ -4,7 +4,21 @@ export default function HomePage() {
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
 
   return (
-    <main id="main-content" tabIndex="-1">
+    <main 
+      id="main-content" 
+      tabIndex="-1"
+      style={{
+        backgroundColor: 'var(--sage, #DDECE7)',
+        backgroundImage: `
+          radial-gradient(at 0% 0%, rgba(255, 255, 255, 0.6) 0px, transparent 50%),
+          radial-gradient(at 100% 0%, rgba(20, 83, 75, 0.06) 0px, transparent 50%),
+          radial-gradient(at 100% 100%, rgba(255, 255, 255, 0.4) 0px, transparent 50%),
+          radial-gradient(at 0% 100%, rgba(20, 83, 75, 0.04) 0px, transparent 50%)
+        `,
+        backgroundSize: '100% 100%',
+        backgroundRepeat: 'no-repeat'
+      }}
+    >
       {/* Hero Section */}
       <section className="hero">
         <div className="container hero-grid">
