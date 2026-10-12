@@ -232,6 +232,7 @@ button { cursor: pointer; border: none; }
 
 .hero-image {
   width: 100%;
+  max-width: 460px;
   height: auto; 
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-subtle);
