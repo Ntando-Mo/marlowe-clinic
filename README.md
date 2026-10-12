@@ -1,7 +1,7 @@
 # Marlowe Clinic: Accessible Healthcare Portal
 **Inclusive UI/UX and Accessible React Component Architecture**
 
-Live Prototype: [https://your-username.github.io/marlowe-clinic/](https://your-username.github.io/marlowe-clinic/)
+Live Prototype: [https://ntando-mo.github.io/marlowe-clinic/](https://ntando-mo.github.io/marlowe-clinic/)
 
 A production-grade, client-side React application designed to provide equitable healthcare access to the Careville community. The platform balances a premium, editorial design system with strict WCAG 2.1 AA compliance, ensuring a seamless booking experience for all users, specifically accommodating keyboard-only navigation and screen-reader (NVDA) reliance.
 
