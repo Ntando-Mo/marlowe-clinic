@@ -11,7 +11,11 @@ export default function ServiceCard({ service }) {
       <h2>{service.name}</h2>
       <p>{service.description}</p>
       <AvailabilityList practitioners={service.practitioners} />
-      <Link className="button button-secondary" to={`/booking?service=${service.id}`}>
+      <Link 
+        className="button button-secondary" 
+        to={`/booking?service=${service.id}`}
+        aria-label={`View details and book an appointment for ${service.name}`}
+      >
         View details and book
       </Link>
     </article>
