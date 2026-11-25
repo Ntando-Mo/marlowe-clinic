@@ -10,7 +10,7 @@
 ## Referenced Audit Artifacts
 
 - **Lighthouse Report:** [./audits/lighthouse-report.html](./audits/lighthouse-report.html)
-- **axe Audit Summary:** [./audits/axe-audit-summary.md](./audits/axe-audit-summary.md)
+- **axe DevTools Screenshot:** [./audits/axe-devtools-home.png](./audits/axe-devtools-home.png)
 
 ## Findings & Remediation Log
 
