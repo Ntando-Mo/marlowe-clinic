@@ -1,23 +1,28 @@
-# Accessibility Verification & Testing Audit
+# Accessibility Test Log — Marlowe Clinic
 
-## 1. Automated Testing (Lighthouse)
-* **Tool Used:** Chrome Lighthouse (DevTools)
-* **Pages Tested:** `/` (Service Directory) and `/booking` (Appointment Form)
-* **Score Achieved:** 100% Accessibility
-* **Notes:** All contrast ratios exceed WCAG AA 4.5:1 requirements following CSS updates. Dynamic `aria-label` attributes successfully implemented to resolve identical link warnings on service cards.
+## Scope & Environment
 
-## 2. Manual Keyboard Navigation Audit
-* **Testing Environment:** Windows 11, Google Chrome
-* **Methodology:** Full traversal using `Tab`, `Shift+Tab`, `Space`, and `Enter`.
-* **Results:** 
-  * Zero keyboard traps detected.
-  * DOM tab sequence strictly matches the visual layout.
-  * The custom `:focus-visible` outline provides high-visibility tracking across all interactive elements.
-  * Programmatic focus correctly shifts to the first invalid input field when form submission fails.
+- **Application:** Marlowe Clinic React Portal (`marlowe-clinic`)
+- **Live URL:** [https://Ntando-Mo.github.io/marlowe-clinic/](https://Ntando-Mo.github.io/marlowe-clinic/)
+- **Views Reviewed:** Home (`/`), Clinic Services (`/services`), Appointment Booking (`/booking`)
+- **Assistive & Audit Tools:** Browser DevTools Lighthouse, axe DevTools, keyboard navigation (`Tab`, `Shift+Tab`, `Enter`, `Space`, `Escape`), and screen reader spot checks
 
-## 3. Screen Reader Audit (NVDA)
-* **Testing Environment:** NVDA 2024.1, Google Chrome
-* **Results:**
-  * **Landmarks & Headings:** NVDA successfully parsed the `<header>`, `<main>`, `<aside>`, and `<footer>` landmarks, allowing quick structural navigation via shortcut keys.
-  * **Stateful Controls:** Triage filter buttons correctly announced their `aria-expanded` and `aria-pressed` state changes in real-time.
-  * **Form Validation:** Explicit `<label>` and `aria-describedby` associations successfully read out helper text. Triggering a validation error successfully fired the `aria-live="polite"` region, announcing the error immediately to the user without moving their current focus.
+## Referenced Audit Artifacts
+
+- **Lighthouse Report:** [./audits/lighthouse-report.html](./audits/lighthouse-report.html)
+- **axe Audit Summary:** [./audits/axe-audit-summary.md](./audits/axe-audit-summary.md)
+
+## Findings & Remediation Log
+
+| ID | Area / View | Issue Identified | Fix / Implemented Behaviour | Status |
+| :--- | :--- | :--- | :--- | :--- |
+| A11Y-01 | `HomePage` ("Seamless Access") | Heading level skipped (`<h2>` followed by `<h4>` in timeline steps). | Updated timeline step headings to `<h3>` to maintain sequential heading hierarchy. | Addressed |
+| A11Y-02 | `ServicesPage` filter controls | Changing category or triage filters moved focus to a heading, pulling keyboard users away from the active control. | Kept focus on the selected filter control and announced updated result counts via `LiveRegion` (`aria-live="polite"`). | Addressed |
+| A11Y-03 | Form controls (`global.css`) | Focus styling relied on a faint shadow rather than a distinct high-contrast outline. | Added a `3px solid var(--forest, #14534B)` outline with `2px` offset on `:focus-visible` for interactive and form elements. | Addressed |
+| A11Y-04 | Route navigation (`App.jsx`, `useFocusOnViewChange.js`) | Navigating between routes in the SPA needed explicit focus handling to `#main-content`. | Added route-change focus management targeting `#main-content` (`tabIndex="-1"`) after initial load. | Addressed |
+
+## Verification Notes
+
+- **Service Filtering & Live Announcements:** Filtering updates results synchronously in React state and updates the `LiveRegion` status message without shifting keyboard focus.
+- **Form Labelling & Validation:** Booking form fields pair with explicit `<label>` elements, helper text, error messages, and live status feedback.
+- **Remaining Manual Checks:** Continue verifying full screen-reader announcements and keyboard tab order across all routes after each build and commit.
