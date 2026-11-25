@@ -1,14 +1,14 @@
-import { Route, Routes } from 'react-router-dom';
-import SkipLink from './components/SkipLink';
-import Header from './components/Header';
-import Footer from './components/Footer';
-import HomePage from './pages/HomePage';
-import ServicesPage from './pages/ServicesPage';
-import BookingPage from './pages/BookingPage';
-import useFocusOnViewChange from './hooks/useFocusOnViewChange';
+import { Route, Routes } from "react-router-dom";
+import SkipLink from "./components/SkipLink";
+import Header from "./components/Header";
+import Footer from "./components/Footer";
+import HomePage from "./pages/HomePage";
+import ServicesPage from "./pages/ServicesPage";
+import BookingPage from "./pages/BookingPage";
+import useFocusOnViewChange from "./hooks/useFocusOnViewChange";
 
-export default function App() {
-  useFocusOnViewChange('main-content');
+function AppShell() {
+  useFocusOnViewChange("main-content");
 
   return (
     <>
@@ -22,4 +22,8 @@ export default function App() {
       <Footer />
     </>
   );
+}
+
+export default function App() {
+  return <AppShell />;
 }
