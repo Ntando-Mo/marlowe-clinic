@@ -2,7 +2,6 @@ import { useMemo, useRef, useState } from 'react'
 import FilterControls from '../components/FilterControls'
 import ServiceCard from '../components/ServiceCard'
 import { services } from '../data/services'
-import useFocusOnViewChange from '../hooks/useFocusOnViewChange'
 
 export default function ServicesPage() {
   const [query, setQuery] = useState('')
@@ -21,8 +20,6 @@ export default function ServicesPage() {
       return matchesQuery && matchesCategory && matchesTriage
     })
   }, [query, category, triage])
-
-  useFocusOnViewChange(headingRef, `${category}-${triage}`)
 
   const resultChanged = previousResultCount.current !== filteredServices.length
   if (resultChanged) previousResultCount.current = filteredServices.length
